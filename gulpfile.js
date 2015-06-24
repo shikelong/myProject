@@ -64,7 +64,7 @@ gulp.task('styles', function() {
   // bower_components/ng-admin/build/ng-admin.min.css
   // bower_components/ng-admin/build/ng-admin-only.min.css
   var cssStream = gulp
-    .src(['bower_components/bootstrap/dist/css/bootstrap.min.css','bower_components/ng-admin/build/ng-admin-only.min.css']);
+    .src(['bower_components/bootstrap/dist/css/bootstrap.min.css','bower_components/ng-admin/build/ng-admin.min.css']);
    // .src('bower_components/bootstrap/dist/css/bootstrap.min.css');
     
   return streamqueue({ objectMode: true }, cssStream, sassStream)
