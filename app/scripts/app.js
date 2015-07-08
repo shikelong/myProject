@@ -98,12 +98,12 @@ angular.module('myApp', ['ng-admin'])
         .title('YiChart')
         //获取所有entry point
         //production: http://yichart.com:8000/rest/
-        //mock:http://private-49b1e-yichart.apiary-mock.com/rest/
+        //mock:http://private-anon-125aa45ec-yichart.apiary-mock.com/rest/
         .baseApiUrl('http://yichart.com:8000/rest/');
 
 
 
-
+    //配置各个模块
     var patient = patientViewConfig(nga);
     var doctor = doctorViewConfig(nga);
 
@@ -117,18 +117,18 @@ angular.module('myApp', ['ng-admin'])
         .addChild(nga.menu(doctor).icon('<span class="glyphicon glyphicon-plus"></span>'))
     );
 
-
+    //返回拦截及处理
     RestangularProvider.addResponseInterceptor(function(data, operation, what, url, response) {
-        
-            if (data.total_count&&operation=="getList") {
 
-                return flattenNestObjectArray(data.result);
-            }
-            else{
-                return flattenNestObjectArray(data)[0];
-            }
-        
+        if (data.total_count && operation == "getList") {
+
+            return flattenNestObjectArray(data.result);
+        } else {
+            return flattenNestObjectArray(data)[0];
+        }
+
     });
+    //请求拦截及处理
     RestangularProvider.addFullRequestInterceptor(function(elem, operation, what, url, headers, params, httpConfig) {
 
         // entityName + '/?page=1&page_size=10&order=1&orderby=id&email=%40'

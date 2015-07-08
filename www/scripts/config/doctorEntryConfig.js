@@ -18,6 +18,15 @@ function doctorViewConfig(nga) {
             }
         });
 
+    doctor.dashboardView()
+        .title('医生信息列表')
+        .order(1) // display the post panel first in the dashboard
+        .perPage(5) // limit the panel to the 5 latest posts
+        .fields([nga.field('username').isDetailLink(true).map(truncate).label('用户名'),
+            nga.field('hospital').label('医院'), nga.field('department').label('科室'),
+            nga.field('phone').label('电话号码')
+        ]);
+
     doctor.listView()
         .title('医生管理') // default title is "[Entity_name] list"
         .description('医生信息列表') // description appears under the title
@@ -50,35 +59,36 @@ function doctorViewConfig(nga) {
             nga.field('username', 'string').label('用户名')
             .validation({
                 required: true,
-                minlength: 1,
                 maxlength: 30
             }),
             nga.field('email').label('电子邮箱')
             .validation({
                 required: false,
-                validator: function(value) {
-                    if (value.indexOf('@') == -1) return false;
-                }
+                validator: validation.email
             }),
             nga.field('last_name').label('姓氏')
             .validation({
                 required: true,
-                maxlength: 15
+                validator: validation.lastName
             }),
             nga.field('first_name').label('名字')
             .validation({
                 required: true,
-                maxlength: 25
+                validator: validation.firstName
             }),
             nga.field('password').label('密码')
             .validation({
                 required: true,
-                maxlength: 20
+                minlength: 6,
+                maxlength: 15,
+                validator: validation.password
             }),
             nga.field('password_conf').label('确认密码')
             .validation({
                 required: true,
-                maxlength: 20
+                minlength: 6,
+                maxlength: 15,
+                validator: validation.password
             }),
             nga.field('dob', 'date').label('出生日期')
             .validation({
@@ -87,7 +97,8 @@ function doctorViewConfig(nga) {
             nga.field('phone').label('电话号码')
             .validation({
                 required: true,
-                maxlength: 20
+                maxlength: 20,
+                validator: validation.telphone
             }),
 
             nga.field('gender', 'choice').label('性别')
@@ -114,19 +125,21 @@ function doctorViewConfig(nga) {
             }]),
             nga.field('hospital').label('医院')
             .validation({
-                required: true
+                required: true,
+                maxlength: 30
             }),
             nga.field('department').label('科室')
             .validation({
-                required: true
+                required: true,
+                maxlength: 20
             }),
         ]);
 
     doctor.editionView()
         .title('编辑医生信息') //"{{ entry.values }}" 
-        .actions(['list', 'show', 'delete'])
+        .actions(['list', 'show', 'delete','back'])
         .fields([
-            doctor.creationView().fields()
+            objArrayCustom.objectArrValueDelete(doctor.creationView().fields(), 'name', ['password', 'password_conf'])
         ]);
 
     doctor.showView()

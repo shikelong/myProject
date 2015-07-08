@@ -17,6 +17,16 @@ function patientViewConfig(nga) {
             }
         });
 
+    patient.dashboardView()
+        .title('病人信息列表')
+        .order(1) // display the post panel first in the dashboard
+        .perPage(5) // limit the panel to the 5 latest posts
+        .fields([nga.field('username').label('用户名').isDetailLink(true).map(truncate),
+            nga.field('illness').label('疾病'),
+            nga.field('gender').label('性别'),
+            nga.field('phone').label('电话号码'),
+        ]); // fields() called with arguments add fields to the view
+
     patient.listView()
         .title('病人管理') // default title is "[Entity_name] list"
         .description('病人信息列表') // description appears under the title
@@ -54,8 +64,7 @@ function patientViewConfig(nga) {
 
     patient.creationView()
         .title('创建病人账户')
-
-    .description('输入信息创建病人账户，其中带*号的为必填项目。')
+        .description('输入信息创建病人账户，其中带*号的为必填项目。')
         .fields([
             nga.field('username').label('用户名') // the default edit field type is "string", and displays as a text input
             .validation({
@@ -129,7 +138,7 @@ function patientViewConfig(nga) {
         .title('编辑病人信息') //"{{ entry.values }}" 
         .actions(['list', 'show', 'delete'])
         .fields([
-            patient.creationView().fields()
+            objArrayCustom.objectArrValueDelete(patient.creationView().fields(),'name',['password','password_conf'])
         ]);
 
     patient.showView()
@@ -142,60 +151,6 @@ function patientViewConfig(nga) {
     return patient;
 }
 
-/**
- * [validation 校验对象]
- * @type {Object}
- */
-var validation = {
-
-    email: function(value) {
-        if (!value.match(/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/)) {
-            throw new Error('你输入的邮箱地址不合法!');
-        }
-    },
-    telphone: function(value) {
-        if (!value.match(/\d{3}-\d{8}|\d{4}-\d{7}|d{11}/)) {
-            throw new Error('你输入的电话号码不合法!');
-        }
-    },
-    firstName: function(value) {
-        //zh-cn 1-2
-        if (value.match(/^[\u4E00-\u9FA5]+$/)) {
-            if (value.length > 2 || value.length < 1) {
-                throw new Error('名字只能包含1-2位中文字符或者1-30个英文字符');
-            }
-        }
-        //en-us 1-30
-        if (value.match(/^[A-Za-z]+$/)) {
-            if (value.length > 30 || value.length < 1) {
-                throw new Error('名字只能包含1-2位中文字符或者1-30个英文字符');
-            }
-        }else{
-            throw new Error('名字只能包含1-2位中文字符或者1-30个英文字符');
-        }
-    },
-    lastName: function(value) {
-        //zh-cn 1-2
-        if (value.match(/^[\u4E00-\u9FA5]+$/)) {
-            if (value.length > 2 || value.length < 1) {
-                throw new Error('姓氏只能包含1-2位中文字符或者1-30个英文字符');
-            }
-        }
-        //en-us 1-30
-        if (value.match(/^[A-Za-z]+$/)) {
-            if (value.length > 30 || value.length < 1) {
-                throw new Error('姓氏只能包含1-2位中文字符或者1-30个英文字符');
-            }
-        }else{
-            throw new Error('姓氏只能包含1-2位中文字符或者1-30个英文字符');
-        }
-    },
-    password: function(value) {
-        if (!value.match(/^[a-zA-Z0-9~!@#$%^&*()_+=-]+$/)) {
-            throw new Error('密码应该由数字,字母和~!@#$%^&*()_+=-组成!');
-        }
-    }
-}
 
 
 
