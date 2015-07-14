@@ -91,7 +91,7 @@ angular.module('myApp', ['ng-admin'])
 }])
 
 
-.config(['NgAdminConfigurationProvider', 'RestangularProvider', function(NgAdminConfigurationProvider, RestangularProvider) {
+.config(['$provide','NgAdminConfigurationProvider', 'RestangularProvider', function($provide,NgAdminConfigurationProvider, RestangularProvider) {
     var nga = NgAdminConfigurationProvider;
     // set the main API endpoint for this admin
     var app = nga.application('YiChart')
@@ -100,7 +100,6 @@ angular.module('myApp', ['ng-admin'])
         //production: http://yichart.com:8000/rest/
         //mock:http://private-anon-125aa45ec-yichart.apiary-mock.com/rest/
         .baseApiUrl('http://yichart.com:8000/rest/');
-
 
 
     //配置各个模块
@@ -117,6 +116,8 @@ angular.module('myApp', ['ng-admin'])
         .addChild(nga.menu(doctor).icon('<span class="glyphicon glyphicon-plus"></span>'))
     );
 
+    //RestangularProvider.setMethodOverriders(["patch"]);
+
     //返回拦截及处理
     RestangularProvider.addResponseInterceptor(function(data, operation, what, url, response) {
 
@@ -128,7 +129,10 @@ angular.module('myApp', ['ng-admin'])
         }
 
     });
-    //请求拦截及处理
+
+
+
+    //请求拦截及添加
     RestangularProvider.addFullRequestInterceptor(function(elem, operation, what, url, headers, params, httpConfig) {
 
         // entityName + '/?page=1&page_size=10&order=1&orderby=id&email=%40'
@@ -152,5 +156,33 @@ angular.module('myApp', ['ng-admin'])
         delete params._sortField;
 
     });
+
+
     nga.configure(app);
+
+
+    
+ 
+    /*$provide.decorator('UpdateQueries', function($delegate) {
+        *
+         * Decorate the origin method for entity update purposes with a decoration that
+         * using PATCH instead of PUT in order to provide partial entity updates.
+         *
+         * @param {View}   view      the formView related to the entity
+         * @param {Object} rawEntity the entity's object
+         *
+         * @returns {promise} the updated object
+         
+        $delegate.updateOne = function(view, rawEntity) {
+            var entityId = rawEntity[view.getEntity().identifier().name()];
+
+            return this.Restangular
+                .oneUrl(view.entity.name(), this.config.getRouteFor(view, entityId))
+                .patch(rawEntity)
+                .then(function(response) {
+                    return view.mapEntry(response.data);
+                });
+        };
+        return $delegate;
+    });*/
 }]);

@@ -48,7 +48,8 @@ function patientViewConfig(nga) {
             nga.field('treat_in_america').label('是否在美治疗')
 
         ])
-        .listActions(['show', 'edit', 'delete'])
+        .listActions(['<ma-show-button label="查看" entry="::entry" entity="::entity" size="xs"></ma-show-button>', ' <ma-edit-button label="编辑" ng-if="::entity.editionView().enabled" entry="::entry" entity="::entity" size="xs"></ma-edit-button>', '<ma-delete-button label="删除" ng-if="::entity.deletionView().enabled" entry="::entry" entity="::entity" size="xs"></ma-delete-button>'])
+        .actions(['export','<ma-create-button entity="::entity" label="创建病人"></ma-create-button>'])
         .filters([
             nga.field('username', 'string').label('').attributes({
                 'placeholder': '请输入用户名进行搜索'
