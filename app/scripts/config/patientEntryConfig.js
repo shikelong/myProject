@@ -16,7 +16,9 @@ function patientViewConfig(nga) {
                 return entityName + "/";
             }
         });
-
+   
+    patient.updateMethod('patch');
+    
     patient.dashboardView()
         .title('病人信息列表')
         .order(1) // display the post panel first in the dashboard

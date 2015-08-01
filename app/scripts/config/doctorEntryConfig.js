@@ -18,6 +18,8 @@ function doctorViewConfig(nga) {
             }
         });
 
+    /*doctor.updateMethod('PATCH');*/
+
     doctor.dashboardView()
         .title('医生信息列表')
         .order(1) // display the post panel first in the dashboard

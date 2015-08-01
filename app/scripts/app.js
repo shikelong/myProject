@@ -106,6 +106,9 @@ angular.module('myApp', ['ng-admin'])
     var patient = patientViewConfig(nga);
     var doctor = doctorViewConfig(nga);
 
+
+
+
     // set the application entities
     app
         .addEntity(patient)
@@ -160,29 +163,4 @@ angular.module('myApp', ['ng-admin'])
 
     nga.configure(app);
 
-
-    
- 
-    /*$provide.decorator('UpdateQueries', function($delegate) {
-        *
-         * Decorate the origin method for entity update purposes with a decoration that
-         * using PATCH instead of PUT in order to provide partial entity updates.
-         *
-         * @param {View}   view      the formView related to the entity
-         * @param {Object} rawEntity the entity's object
-         *
-         * @returns {promise} the updated object
-         
-        $delegate.updateOne = function(view, rawEntity) {
-            var entityId = rawEntity[view.getEntity().identifier().name()];
-
-            return this.Restangular
-                .oneUrl(view.entity.name(), this.config.getRouteFor(view, entityId))
-                .patch(rawEntity)
-                .then(function(response) {
-                    return view.mapEntry(response.data);
-                });
-        };
-        return $delegate;
-    });*/
 }]);
