@@ -21,7 +21,7 @@ function doctorViewConfig(nga) {
     doctor.updateMethod('patch');
 
     doctor.dashboardView()
-        .title('医生信息列表')
+        .title('近期医生列表')
         .order(1) // display the post panel first in the dashboard
         .perPage(5) // limit the panel to the 5 latest posts
         .fields([nga.field('username').isDetailLink(true).map(truncate).label('用户名'),

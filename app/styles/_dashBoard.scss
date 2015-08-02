@@ -1,0 +1,10 @@
+ma-dashboard-panel {
+    [class="panel-heading"] {
+        a {
+            color: #fff;
+        }
+        & {
+            background-color: #5cb85c !important;
+        }
+    }
+}

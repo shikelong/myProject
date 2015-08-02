@@ -24,7 +24,7 @@ function patientViewConfig(nga) {
 
 
     patient.dashboardView()
-        .title('病人信息列表')
+        .title('近期病人列表')
         .order(1) // display the post panel first in the dashboard
         .perPage(5) // limit the panel to the 5 latest posts
         .fields([nga.field('username').label('用户名').isDetailLink(true).map(truncate),
