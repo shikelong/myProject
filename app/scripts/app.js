@@ -91,7 +91,7 @@ angular.module('myApp', ['ng-admin'])
 }])
 
 
-.config(['$provide','NgAdminConfigurationProvider', 'RestangularProvider', function($provide,NgAdminConfigurationProvider, RestangularProvider) {
+.config(['$provide', 'NgAdminConfigurationProvider', 'RestangularProvider', function($provide, NgAdminConfigurationProvider, RestangularProvider) {
     var nga = NgAdminConfigurationProvider;
     // set the main API endpoint for this admin
     var app = nga.application('YiChart')
@@ -146,12 +146,27 @@ angular.module('myApp', ['ng-admin'])
         if (operation != "remove") {
             //添加自己的分页参数
             params.page = params._page || 1;
-            params.page_size = params._perPage || 10;
             params.order = (params._sortDir == "ASC" ? 0 : 1) || 1;
             params.orderby = params._sortField || 'id';
         } else {
             // url=what + '/' + identifierValue + '/';
         }
+        //对更新参数做修改
+        if (operation === "patch") {
+            if (what === "patient") {
+                var deleteAttr = ['email', 'username'];
+                for (var i = 0; i < deleteAttr.length; i++) {
+                    delete elem[deleteAttr[i]];
+                };
+            } else if (what === "doctor") {
+                var deleteAttr = ['email', 'username'];
+                for (var i = 0; i < deleteAttr.length; i++) {
+                    delete elem[deleteAttr[i]];
+                };
+            }
+        }
+
+
         //移除自带的分页参数等等
         delete params._page;
         delete params._perPage;

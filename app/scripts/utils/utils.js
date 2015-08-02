@@ -112,7 +112,7 @@ var objArrayCustom = {
         });
         return resultArr;
     },
-
+    //根据参数和属性值从对象数组中删除元素
     objectArrValueDelete: function(objArr, delAttr, delArr) {
         var resultArr = [];
         objArr.forEach(function(value, index) {
@@ -123,3 +123,20 @@ var objArrayCustom = {
         return resultArr;
     }
 };
+
+
+var customButtons={
+   
+   //action button
+   list:'<ma-list-button ng-if=::entity.listView().enabled label="列表" entity=::entity></ma-list-button>',
+   delete:function(label){ return '<ma-delete-button label="删除" ng-if="::entity.deletionView().enabled" entry="::entry" entity="::entity" ></ma-delete-button>';          },
+   show:function(label){ return '<ma-show-button label="查看" entry="::entry" entity="::entity"></ma-show-button>';          },
+   create:function(label){ return '<ma-create-button entity="::entity" label="'+label+'"></ma-create-button>';},
+   edit:function(label){ return '<ma-edit-button label="编辑" ng-if="::entity.editionView().enabled" entry="::entry" entity="::entity" ></ma-edit-button>'; },
+   exportCvs:'<ma-export-to-csv-button  datastore=datastore entity=entity search=search label="导出表格"></ma-export-to-csv-button>',
+   //buttons in grid
+   showXz:'<ma-show-button label="查看" entry="::entry" entity="::entity" size="xs"></ma-show-button>',
+   editXz:'<ma-edit-button label="编辑" ng-if="::entity.editionView().enabled" entry="::entry" entity="::entity" size="xs"></ma-edit-button>',
+   deleteXz:'<ma-delete-button label="删除" ng-if="::entity.deletionView().enabled" entry="::entry" entity="::entity" size="xs"></ma-delete-button>'
+}
+
