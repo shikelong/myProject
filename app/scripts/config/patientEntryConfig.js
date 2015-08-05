@@ -151,7 +151,7 @@ function patientViewConfig(nga) {
 
     patient.showView()
         .title('查看病人<span class="patientName">{{entry.values.last_name+entry.values.first_name}}</span>的信息 ')
-        .actions([customButtons.list,customButtons.edit(),customButtons.delete()])
+        .actions(['<my-slide-button></my-slide-button>',customButtons.list,customButtons.edit(),customButtons.delete()])
         .fields([
             nga.field('id'),
             patient.editionView().fields()

@@ -1,0 +1,15 @@
+<div class="modal-header">
+    <h4>查看病人病历</h4></div>
+<div class="modal-body">
+	   <div class="row">
+	   	<div class="col-xs-12 .col-sm-4 col-md-3" ng-repeat="slide in slides">
+	   		<a class="thumbnail" href="#">
+	   			<img ng-src="{{slide.image}}" alt="{{slide.text}}">
+	   			<p>{{slide.text}}</p>
+	   		</a>
+	   	</div>
+	   </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="okModal()">确定</button>
+</div>
