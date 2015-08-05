@@ -155,6 +155,9 @@ function patientViewConfig(nga) {
         .fields([
             nga.field('id'),
             patient.editionView().fields()
+            /*nga.field('','template')
+            .label('')
+            .template(' <a  href="http://c1.staticflickr.com/1/356/18957923475_6ba569c037_b.jpg" fancyboxable> <img  src="http://c1.staticflickr.com/1/356/18957923475_6ba569c037_m.jpg"> </a>')*/
         ]);
 
     patient.deletionView()

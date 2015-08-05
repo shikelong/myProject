@@ -4,3 +4,16 @@
 .doctorName {
     color: #EE244D
 }
+
+
+.text-center{
+	text-align:center;
+}
+
+
+.img-hover{
+
+	&:hover{
+		transform: scale(1,1.05);
+	}
+}

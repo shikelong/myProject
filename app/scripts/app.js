@@ -4,7 +4,7 @@
  * 作用：模块定义及DI声明
  * shikelong 2015年6月1日21:17:06
  */
-angular.module('myApp', ['ng-admin','ui.bootstrap'])
+angular.module('myApp', ['ng-admin','ui.bootstrap','fancyboxplus'])
 
 .run(['$templateCache', function($templateCache) {
 

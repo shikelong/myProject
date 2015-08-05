@@ -16,9 +16,15 @@ function patientViewConfig(nga) {
                 return entityName + "/";
             }
         });
+   
+    patient.updateMethod('patch');
+    
+
+
+
 
     patient.dashboardView()
-        .title('病人信息列表')
+        .title('近期病人列表')
         .order(1) // display the post panel first in the dashboard
         .perPage(5) // limit the panel to the 5 latest posts
         .fields([nga.field('username').label('用户名').isDetailLink(true).map(truncate),
@@ -48,8 +54,8 @@ function patientViewConfig(nga) {
             nga.field('treat_in_america').label('是否在美治疗')
 
         ])
-        .listActions(['<ma-show-button label="查看" entry="::entry" entity="::entity" size="xs"></ma-show-button>', ' <ma-edit-button label="编辑" ng-if="::entity.editionView().enabled" entry="::entry" entity="::entity" size="xs"></ma-edit-button>', '<ma-delete-button label="删除" ng-if="::entity.deletionView().enabled" entry="::entry" entity="::entity" size="xs"></ma-delete-button>'])
-        .actions(['export','<ma-create-button entity="::entity" label="创建病人"></ma-create-button>'])
+        .listActions([customButtons.showXz,customButtons.editXz,customButtons.deleteXz])
+        .actions([customButtons.exportCvs,customButtons.create('新建病人')])
         .filters([
             nga.field('username', 'string').label('').attributes({
                 'placeholder': '请输入用户名进行搜索'
@@ -66,6 +72,7 @@ function patientViewConfig(nga) {
     patient.creationView()
         .title('创建病人账户')
         .description('输入信息创建病人账户，其中带*号的为必填项目。')
+        .actions([customButtons.list])
         .fields([
             nga.field('username').label('用户名') // the default edit field type is "string", and displays as a text input
             .validation({
@@ -74,7 +81,7 @@ function patientViewConfig(nga) {
             }),
             nga.field('email').label('电子邮箱')
             .validation({
-                required: false,
+                required: true,
                 validator: validation.email
             }),
             nga.field('last_name').label('姓氏')
@@ -136,47 +143,31 @@ function patientViewConfig(nga) {
         ]);
 
     patient.editionView()
-        .title('编辑病人信息') //"{{ entry.values }}" 
-        .actions(['list', 'show', 'delete'])
+        .title('编辑病人<span class="patientName">{{entry.values.last_name+entry.values.first_name }}</span>的信息 ') //"{{ entry.values }}" 
+        .actions([customButtons.list,customButtons.show(),customButtons.delete()])
         .fields([
-            objArrayCustom.objectArrValueDelete(patient.creationView().fields(),'name',['password','password_conf'])
+            objArrayCustom.objectArrValueDelete(patient.creationView().fields(),'name',['password','password_conf','username','email'])
         ]);
 
     patient.showView()
-        .title('病人信息详情页')
+        .title('查看病人<span class="patientName">{{entry.values.last_name+entry.values.first_name}}</span>的信息 ')
+        .actions(['<my-slide-button></my-slide-button>',customButtons.list,customButtons.edit(),customButtons.delete()])
         .fields([
             nga.field('id'),
             patient.editionView().fields()
+            /*nga.field('','template')
+            .label('')
+            .template(' <a  href="http://c1.staticflickr.com/1/356/18957923475_6ba569c037_b.jpg" fancyboxable> <img  src="http://c1.staticflickr.com/1/356/18957923475_6ba569c037_m.jpg"> </a>')*/
         ]);
+
+    patient.deletionView()
+        .title('删除病人信息')
+        .description('确认删除病人<span class="patientName">{{entry.values.last_name+entry.values.first_name}}</span>吗？');
 
     return patient;
 }
 
+//bug: 导出表格中文会乱码
 
 
 
-
-
-// {
-//     "first_name": [
-//         "名只能包含1-2位中文字符或者1-30个英文字符"
-//     ],
-//     "username": [
-//         "这个字段是必须的"
-//     ],
-//     "password": [
-//         "密码长度为 6-15 只能包含字母数字和~!@#$%^&*()_+=-"
-//     ],
-//     "last_name": [
-//         "名只能包含1-2位中文字符或者1-30个英文字符"
-//     ],
-//     "phone": [
-//         "带有区号的座机号或者手机号码，例如 0293-8888888，13888888888"
-//     ],
-//     "password_conf": [
-//         "密码长度为 6-15 只能包含字母数字和~!@#$%^&*()_+=-"
-//     ],
-//     "language": [
-//         "“22112” 不是合法选项。"
-//     ]
-// }

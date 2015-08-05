@@ -1,7 +1,7 @@
 'use strict';
 
 
-var appName = 'YiChartManagement';
+var appName = 'myApp';
 
 var gulp = require('gulp');
 var plugins = require('gulp-load-plugins')();

@@ -18,8 +18,10 @@ function doctorViewConfig(nga) {
             }
         });
 
+    doctor.updateMethod('patch');
+
     doctor.dashboardView()
-        .title('医生信息列表')
+        .title('近期医生列表')
         .order(1) // display the post panel first in the dashboard
         .perPage(5) // limit the panel to the 5 latest posts
         .fields([nga.field('username').isDetailLink(true).map(truncate).label('用户名'),
@@ -31,7 +33,7 @@ function doctorViewConfig(nga) {
         .title('医生管理') // default title is "[Entity_name] list"
         .description('医生信息列表') // description appears under the title
         .infinitePagination(true) // load pages as the user scrolls
-        .actions(['<ma-export-to-csv-button entity="::entity" label="导出表格"></ma-export-to-csv-button>','<ma-create-button entity="::entity" label="创建医生"></ma-create-button>'])
+        .actions([customButtons.exportCvs,customButtons.create('新建医生')])
         .fields([
             nga.field('id').label('用户编号'),
             nga.field('username').label('用户名'),
@@ -46,7 +48,7 @@ function doctorViewConfig(nga) {
             nga.field('hospital').label('医院'),
             nga.field('department').label('科室')
         ])
-        .listActions(['show', 'edit', 'delete'])
+        .listActions([customButtons.showXz,customButtons.editXz,customButtons.deleteXz])
         .filters([
             nga.field('username', 'string').label('').attributes({
                 'placeholder': '请输入用户名进行搜索'
@@ -55,6 +57,7 @@ function doctorViewConfig(nga) {
 
     doctor.creationView()
         .title('创建医生账户')
+        .actions([customButtons.list])
         .description('输入信息创建医生账户，其中带*号的为必填项目。')
         .fields([
             nga.field('username', 'string').label('用户名')
@@ -101,7 +104,6 @@ function doctorViewConfig(nga) {
                 maxlength: 20,
                 validator: validation.telphone
             }),
-
             nga.field('gender', 'choice').label('性别')
             .validation({
                 required: true
@@ -137,22 +139,23 @@ function doctorViewConfig(nga) {
         ]);
     
     doctor.editionView()
-        .title('编辑医生信息') //"{{ entry.values }}" 
-        .actions(['list', 'show', 'delete','back'])
+        .title('编辑医生<span class="doctorName">{{entry.values.last_name+entry.values.first_name }}</span>的信息 ') //"{{ entry.values }}" 
+        .actions([customButtons.list,customButtons.show(),customButtons.delete()])
         .fields([
-            objArrayCustom.objectArrValueDelete(doctor.creationView().fields(), 'name', ['password', 'password_conf'])
+            objArrayCustom.objectArrValueDelete(doctor.creationView().fields(), 'name', ['password', 'password_conf','username','email',''])
         ]);
 
     doctor.showView()
-        .title('医生信息详情')
+        .title('编辑医生<span class="doctorName">{{entry.values.last_name+entry.values.first_name }}</span>的信息 ')
+        .actions([customButtons.list,customButtons.edit(),customButtons.delete()])
         .fields([
             nga.field('id'),
             doctor.editionView().fields()
         ]);
 
     doctor.deletionView()
-        .title('医生删除')
-        .description('确认删除医生{{ entity }}吗？');
+        .title('删除医生信息')
+        .description('确认删除医生<span class="doctorName">{{entry.values.last_name+entry.values.first_name }}</span>吗？');
 
 
     return doctor;
