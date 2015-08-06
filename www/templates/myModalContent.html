@@ -3,12 +3,24 @@
 <div class="modal-body">
     <div class="row">
         <div class="col-xs-12 .col-sm-4 col-md-3" ng-repeat="slide in slides">
-            <a class="thumbnail text-center" ng-click="lookDetail()" ng-mouseover="imgSelected()" href="#">
-                <img ng-src="{{slide.image}}" class="img-responsive center-block img-rounded img-hover" alt="{{slide.text}}"> {{slide.text}}
+            <a class="thumbnail text-center fancybox" data-fancybox-group="button" ng-href="{{slide.image}}" href="#">
+                <img ng-src="{{slide.image}}" class="img-responsive center-block img-rounded img-hover" alt="{{slide.text}}">
             </a>
         </div>
+        <!--      <div class="col-xs-12 .col-sm-4 col-md-3">
+                       fancyboxable
+                       <a class="thumbnail fancybox text-center" data-fancybox-group="button" href="http://g.hiphotos.baidu.com/image/w%3D310/sign=6ef3a62e97cad1c8d0bbfa264f3f67c4/962bd40735fae6cd25341d600db30f2442a70f2a.jpg">
+                           <img src="http://g.hiphotos.baidu.com/image/pic/item/962bd40735fae6cd25341d600db30f2442a70f2a.jpg">
+                       </a>
+                   </div>
+                   <div class="col-xs-12 .col-sm-4 col-md-3">
+                       fancyboxable
+                       <a class="thumbnail fancybox text-center" data-fancybox-group="button" href="http://hi.baidu.com/colour_j/item/5c2280dd3867f7c31a72b481">
+                           <img src="http://hi.baidu.com/colour_j/item/5c2280dd3867f7c31a72b481">
+                       </a>
+                   </div>
+       </div> -->
     </div>
-</div>
-<div class="modal-footer">
-    <button class="btn btn-primary" ng-click="okModal()">确定</button>
-</div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="okModal()">确定</button>
+    </div>

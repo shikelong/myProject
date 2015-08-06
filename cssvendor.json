@@ -1,0 +1,8 @@
+[
+
+    "bower_components/bootstrap/dist/css/bootstrap.min.css",
+    "bower_components/ng-admin/build/ng-admin.min.css",
+    "bower_components/fancy-box/source/jquery.fancybox.css",
+    "bower_components/fancy-box/source/helpers/jquery.fancybox-buttons.css"
+
+]

@@ -63,9 +63,12 @@ gulp.task('styles', function() {
       .pipe(plugins.autoprefixer('last 1 Chrome version', 'last 3 iOS versions', 'last 3 Android versions'))
   // bower_components/ng-admin/build/ng-admin.min.css
   // bower_components/ng-admin/build/ng-admin-only.min.css
+  var cssVendorFiles=require("./cssvendor.json");
   var cssStream = gulp
-    .src(['bower_components/bootstrap/dist/css/bootstrap.min.css','bower_components/ng-admin/build/ng-admin.min.css']);
-   // .src('bower_components/bootstrap/dist/css/bootstrap.min.css');
+    .src(cssVendorFiles)
+    .pipe(plugins.concat('vendor.css'))
+    .on('error',errorHandler);
+
     
   return streamqueue({ objectMode: true }, cssStream, sassStream)
     .pipe(plugins.concat('main.css'))
@@ -74,6 +77,7 @@ gulp.task('styles', function() {
     .pipe(gulp.dest(path.join(targetDir, 'styles')))
     .on('error', errorHandler);
 });
+
 
 
 // build templatecache, copy scripts.

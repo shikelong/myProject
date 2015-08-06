@@ -1,7 +1,7 @@
 [
     "bower_components/jquery/dist/jquery.min.js",
-    "bower_components/ng-admin/build/ng-admin.min.js",    
-    "bower_components/fancybox-plus/src/jquery.fancybox-plus.js",
-    "bower_components/angular-fancybox-plus/js/angular-fancybox-plus.js",
+    "bower_components/ng-admin/build/ng-admin.min.js",
+    "bower_components/fancy-box/source/jquery.fancybox.pack.js",
+    "bower_components/fancy-box/source/helpers/jquery.fancybox-buttons.js",    
     "node_modules/flat/index.js"
 ]

@@ -4,9 +4,30 @@
  * 作用：模块定义及DI声明
  * shikelong 2015年6月1日21:17:06
  */
-angular.module('myApp', ['ng-admin','ui.bootstrap','fancyboxplus'])
+angular.module('myApp', ['ng-admin','ui.bootstrap'])
 
 .run(['$templateCache', function($templateCache) {
+
+    $('.fancybox').fancybox({
+        openEffect: 'none',
+        closeEffect: 'none',
+
+        prevEffect: 'none',
+        nextEffect: 'none',
+
+        closeBtn: false,
+
+        helpers: {
+            title: {
+                type: 'inside'
+            },
+            buttons: {}
+        },
+
+        afterLoad: function() {
+            this.title = 'Image ' + (this.index + 1) + ' of ' + this.group.length + (this.title ? ' - ' + this.title : '');
+        }
+    });
 
     $templateCache.put("template/datepicker/datepicker.html",
         "<div ng-switch=\"datepickerMode\" role=\"application\" ng-keydown=\"keydown($event)\">\n" +
